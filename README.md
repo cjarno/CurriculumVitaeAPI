@@ -1,10 +1,10 @@
-# CurriculumnVitaeAPI
+# CurriculumVitaeAPI
 
 #### API URL: `curriculumnvitae-1-c2718671.deta.app`
 
 ### Description
 
-Codebase for the API representing my curriculumn vitae. 
+Codebase for the API representing my curriculum vitae. 
 The API is written in Python utilising FastAPI for efficient API development, 
 and Pydantic is for the data modeling and validation.
 
