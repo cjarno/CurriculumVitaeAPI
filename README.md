@@ -6,13 +6,13 @@
 
 Codebase for the API representing my curriculum vitae. 
 The API is written in Python utilising FastAPI for efficient API development, 
-and Pydantic is for the data modeling and validation.
+and Pydantic for the data modeling and validation.
 
 Information can be retrieved by several `GET` methods and a
 `POST` method is provided to contact me directly via Telegram.
 
 A [swagger UI is also provided for documentation](https://curriculumnvitae-1-c2718671.deta.app/docs) 
-and allows users to quickly ues the available endpoints.
+and allows users to quickly use the available endpoints.
 
 ## Built With
 
