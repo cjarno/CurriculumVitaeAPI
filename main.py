@@ -100,7 +100,7 @@ async def get_candidate_curriculum_vitae(candidate_id: str = "CJA") -> Curriculu
     return candidate_cv.model_dump(mode="json")
 
 
-@app.post("/send_message")
+@app.post("/message")
 async def send_a_message_to_candidate_via_telegram(mes: Message) -> dict:
     """Send a message directly to the candidate."""
     message_payload = dict(
