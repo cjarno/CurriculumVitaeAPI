@@ -32,8 +32,8 @@ def custom_openapi():
         return app.openapi_schema
     openapi_schema = get_openapi(
         title="Christopher Arnold's CV",
-        version="1.0.0",
-        summary="API for Christopher Arnold's Curriculum Vitae.",
+        version="1.0.1",
+        summary="An API that allows you to access Christopher Arnold's Curriculum Vitae details and provides a contact endpoint.",
         description=None,
         routes=app.routes,
     )
@@ -49,7 +49,7 @@ app.openapi = custom_openapi
 
 @app.get("/", include_in_schema=False)
 def read_root():
-    return {"Welcome": "This is the API for Christopher Arnold's curriculumn vitae.."}
+    return {"Welcome": "This is the API for Christopher Arnold's curriculumn vitae."}
 
 
 @app.get("/contact")
@@ -126,4 +126,3 @@ async def send_a_message_to_candidate_via_telegram(mes: Message) -> dict:
         raise HTTPException(status_code=404, detail="The Message could not be sent!")
 
     return {"response": "Message Sent."}
-

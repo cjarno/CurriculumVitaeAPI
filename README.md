@@ -24,7 +24,7 @@ and allows users to quickly use the available endpoints.
 
 
 ## Version
-![Version1](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square)
+![Version1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square)
 
 
 ## Author
