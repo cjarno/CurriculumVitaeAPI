@@ -21,7 +21,7 @@ class CandidateContact(BaseModel):
         last_name="Arnold",
         mobile=dict(AU="+61 403 934 257", DE="+49 1573 8186 550"),
         email="cjarnold93@gmail.com",
-        website="https://www.christopherarnold.au/",
+        website="https://christopherarnold.au/",
         linkedin="https://www.linkedin.com/in/cjarno/",
     )
 
@@ -37,7 +37,7 @@ class CandidateSkillSet(BaseModel):
         Skill(
             name="Python",
             level="Proficient",
-            subset=["Pandas", "NumPy", "SciPy", "Pydantic", "FastAPI", "Django"],
+            subset=["Pandas", "NumPy", "SciPy", "Pydantic", "FastAPI", "Django", "Dash"],
         ),
         Skill(name="SQL", level="Intermediate", subset=None),
         Skill(name="Git", level="Intermediate", subset=["GitLab", "GitHub"]),
@@ -45,7 +45,6 @@ class CandidateSkillSet(BaseModel):
         Skill(name="CSS", level="Intermediate", subset=None),
         Skill(name="HTML", level="Intermediate", subset=None),
         Skill(name="VBA", level="Basic", subset=None),
-        Skill(name="C#", level="Basic", subset=None),
     ]
     platforms: List[Skill] = [
         Skill(name="Bloomberg Terminal", level="Advanced", subset=None),
@@ -54,8 +53,8 @@ class CandidateSkillSet(BaseModel):
         Skill(name="GitHub", level="Intermediate", subset=None),
         Skill(name="Rundeck", level="Intermediate", subset=None),
         Skill(name="JupyterHub", level="Intermediate", subset=None),
-        Skill(name="Amazon Web Service", level="Basic", subset=["Lambda"]),
-        Skill(name="Google Cloud Platform", level="Basic", subset=None),
+        Skill(name="AWS", level="Basic", subset=["Lambda"]),
+        Skill(name="DigitalOcean", level="Basic", subset=["Droplets"]),
     ]
 
 
@@ -126,9 +125,9 @@ class CandidateExperiences(BaseModel):
             start=dt.date(year=2023, month=2, day=1),
             finish="Current",
             responsibilities=[
-                "Developed and maintained Python based fixed income quantitative libraries, as well as supporting libraries.",
-                "Responsible for delegating and executing peer reviews on over 40 cross-team production repositories, focusing specifically on newly developed index models, to ensure optimal quality and alignment to standards.",
-                "Managed the ongoing model optimization and client relations for more than 20 indices linked to fixed income funds and ETFs.",
+                "Served as lead developer for Python based fixed income quantitative libraries, as well as supporting framework and data retrieval libraries, which are implemented in models covering more than 400 published indices.",
+                "Responsible for delegating and executing peer code reviews on 109 index production repositories, with a focus on ensuring the code is of a sufficient quality and adheres to OOP and PEP8 standards.",
+                "Managed the model optimisation and technical implementation in Python for more than 30 unique indices with 3 linked to fixed income funds and ETFs.",
             ],
         ),
         Experience(
@@ -139,9 +138,9 @@ class CandidateExperiences(BaseModel):
             start=dt.date(year=2021, month=9, day=1),
             finish=dt.date(year=2023, month=1, day=31),
             responsibilities=[
-                "Developed automated calculation and data validation process using Python, SQL, APIs, and Bash, amplifying team responsiveness in detecting anomalies while delivering an average cumulative daily timesaving of 2 hours.",
-                "Implemented existing index production models into Python from VBA.",
-                "Assisting colleagues with technical queries and bugfixes on Python, Git, and Object-Orientated Programming topics.",
+                "Developed automated daily calculation and data validation processes with Python, SQL, and Bash, resulting in increased team responsiveness in detecting anomalies and a cumulative time-saving of 2 hours per day.",
+                "Transitioned 6 existing index production models from VBA and Excel into Python.",
+                "Assisted colleagues with various technical queries and bug fixes across Python, Git, and OOP topics.",
             ],
         ),
         Experience(
@@ -152,7 +151,7 @@ class CandidateExperiences(BaseModel):
             start=dt.date(year=2021, month=2, day=1),
             finish=dt.date(year=2021, month=8, day=31),
             responsibilities=[
-                "Coordinated a multi-asset class index tender linked to £23.1B in assets under management.",
+                "Coordinated a tender for a suite of multi-asset class indices linked to £23.1B in assets under management.",
                 "Responsible for calculating index performance statistics for clients, including historical performance, correlation, and tracking error.",
             ],
         ),
@@ -164,8 +163,8 @@ class CandidateExperiences(BaseModel):
             start=dt.date(year=2019, month=10, day=1),
             finish=dt.date(year=2019, month=12, day=31),
             responsibilities=[
-                "Developed a model to forecast total returns for the United States Investment Grade and High Yield corporate bond market.",
-                "Researched and delivered concise daily summaries to the Chief Investment Officer and Investment Team on current economic and financial events occurring across the European region.",
+                "Forecasted total returns using linear regression for the United States Investment Grade and High Yield corporate bond market.",
+                "Researched and delivered concise daily summaries to the Chief Investment Officer and Investment Team on current economic and financial events occurring across the European region",
             ],
         ),
     ]
