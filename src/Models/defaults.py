@@ -54,6 +54,7 @@ class CandidateSkillSet(BaseModel):
         Skill(name="Rundeck", level="Intermediate", subset=None),
         Skill(name="JupyterHub", level="Intermediate", subset=None),
         Skill(name="AWS", level="Basic", subset=["Lambda"]),
+        Skill(name="Jira", level="Advanced", subset=None),
         Skill(name="DigitalOcean", level="Basic", subset=["Droplets"]),
     ]
 

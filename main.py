@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.openapi.utils import get_openapi
-from fastapi.middleware.cors import CORSMiddleware
+# from fastapi.middleware.cors import CORSMiddleware
 import datetime as dt
 from loguru import logger
 
@@ -18,13 +18,13 @@ from src.Telegram import Telegram
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 
 def custom_openapi():
