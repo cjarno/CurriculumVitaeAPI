@@ -36,7 +36,7 @@ class CandidateSkillSet(BaseModel):
     technical: List[Skill] = [
         Skill(
             name="Python",
-            level="Proficient",
+            level="Intermediate",
             subset=["Pandas", "NumPy", "SciPy", "Pydantic", "FastAPI", "Django", "Dash"],
         ),
         Skill(name="SQL", level="Intermediate", subset=None),
@@ -54,6 +54,7 @@ class CandidateSkillSet(BaseModel):
         Skill(name="Rundeck", level="Intermediate", subset=None),
         Skill(name="JupyterHub", level="Intermediate", subset=None),
         Skill(name="AWS", level="Basic", subset=["Lambda"]),
+        Skill(name="Jira", level="Advanced", subset=None),
         Skill(name="DigitalOcean", level="Basic", subset=["Droplets"]),
     ]
 
