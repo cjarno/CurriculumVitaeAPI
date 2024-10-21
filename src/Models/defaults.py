@@ -36,7 +36,7 @@ class CandidateSkillSet(BaseModel):
     technical: List[Skill] = [
         Skill(
             name="Python",
-            level="Intermediate",
+            level="Proficient",
             subset=["Pandas", "NumPy", "SciPy", "Pydantic", "FastAPI", "Django", "Dash"],
         ),
         Skill(name="SQL", level="Intermediate", subset=None),
