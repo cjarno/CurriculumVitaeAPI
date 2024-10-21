@@ -1,6 +1,8 @@
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.openapi.utils import get_openapi
-# from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 import datetime as dt
 from loguru import logger
 
@@ -18,13 +20,13 @@ from src.Telegram import Telegram
 
 app = FastAPI()
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
+# ADD FAVICON STATIC FILES
+favicon_path = os.path.join(os.path.dirname(__file__), "static", "favicon.ico")
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return FileResponse(favicon_path)
 
 
 def custom_openapi():
