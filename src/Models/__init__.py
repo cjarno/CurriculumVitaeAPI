@@ -2,6 +2,7 @@ from .base_models import (
     CurriculumVitae,
     Candidate,
     Skill,
+    SkillSet,
     Education,
     Institution,
     Grade,

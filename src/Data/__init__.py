@@ -1,1 +1,1 @@
-from .connect import DetaDB
+from .connect import CandidateDB
