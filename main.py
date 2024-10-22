@@ -39,7 +39,7 @@ def custom_openapi():
         return app.openapi_schema
     openapi_schema = get_openapi(
         title="Christopher Arnold's CV",
-        version="1.0.1",
+        version="1.1.0",
         summary="An API that allows you to access Christopher Arnold's Curriculum Vitae details and provides a contact endpoint.",
         description=None,
         routes=app.routes,
