@@ -63,7 +63,7 @@ def read_root():
 
 
 @app.get("/contact")
-async def get_candidate_contact_info(candidate_id: str = "CJA") -> dict[str, Any]:
+async def get_candidate_contact_info(candidate_id: str = "CJA") -> CandidateContact:
     """Get the contact details for the candidate."""
     candidate_contact_data = candidate_db.simple_query(table='candidates', column='CandidateContact', key=candidate_id)
     candidate_contact_model = CandidateContact(**candidate_contact_data)
@@ -71,7 +71,7 @@ async def get_candidate_contact_info(candidate_id: str = "CJA") -> dict[str, Any
 
 
 @app.get("/experience")
-async def get_candidate_experience(candidate_id: str = "CJA") -> dict[str, Any]:
+async def get_candidate_experience(candidate_id: str = "CJA") -> CandidateExperiences:
     """Get details regarding the professional experience of the candidate."""
     candidate_experiences_data = candidate_db.simple_query(table='candidates', column='CandidateExperiences', key=candidate_id)
     candidate_experiences_model = CandidateExperiences(**candidate_experiences_data)
@@ -79,7 +79,7 @@ async def get_candidate_experience(candidate_id: str = "CJA") -> dict[str, Any]:
 
 
 @app.get("/education")
-async def get_candidate_education(candidate_id: str = "CJA") -> dict[str, Any]:
+async def get_candidate_education(candidate_id: str = "CJA") -> CandidateEducation:
     """Get the education details for the candidate."""
     candidate_education_data = candidate_db.simple_query(table='candidates', column='CandidateEducation', key=candidate_id)
     candidate_education_model = CandidateEducation(**candidate_education_data)
@@ -87,7 +87,7 @@ async def get_candidate_education(candidate_id: str = "CJA") -> dict[str, Any]:
 
 
 @app.get("/skills")
-async def get_candidate_skills(candidate_id: str = "CJA") -> dict[str, Any]:
+async def get_candidate_skills(candidate_id: str = "CJA") -> CandidateSkillSet:
     """Get details regarding the skillset of the candidate."""
     candidate_skills_data = candidate_db.simple_query(table='candidates', column='CandidateSkillSet', key=candidate_id)
     candidate_skills_model = CandidateSkillSet(**candidate_skills_data)
@@ -95,7 +95,7 @@ async def get_candidate_skills(candidate_id: str = "CJA") -> dict[str, Any]:
 
 
 @app.get("/interests")
-async def get_candidate_interests(candidate_id: str = "CJA") -> dict[str, Any]:
+async def get_candidate_interests(candidate_id: str = "CJA") -> CandidateInterests:
     """Get the interests for the candidate."""
     candidate_interests_data = candidate_db.simple_query(table='candidates', column='CandidateInterests', key=candidate_id)
     candidate_interests_model = CandidateInterests(**candidate_interests_data)
