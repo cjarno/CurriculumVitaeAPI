@@ -1,10 +1,12 @@
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.openapi.utils import get_openapi
 # from fastapi.middleware.cors import CORSMiddleware
 import datetime as dt
 from loguru import logger
+from typing import Any
 
-from src.Data import DetaDB
+from src.Data import CandidateDB
 from src.Models import Message, CurriculumVitae
 from src.Models import (
     CandidateContact,
@@ -12,6 +14,11 @@ from src.Models import (
     CandidateEducation,
     CandidateInterests,
     CandidateSkillSet,
+    Candidate,
+    Experience,
+    Interest,
+    Education,
+    SkillSet
 )
 from src.Telegram import Telegram
 
@@ -32,7 +39,7 @@ def custom_openapi():
         return app.openapi_schema
     openapi_schema = get_openapi(
         title="Christopher Arnold's CV",
-        version="1.0.1",
+        version="1.1.0",
         summary="An API that allows you to access Christopher Arnold's Curriculum Vitae details and provides a contact endpoint.",
         description=None,
         routes=app.routes,
@@ -46,6 +53,9 @@ def custom_openapi():
 
 app.openapi = custom_openapi
 
+candidate_db = CandidateDB(f'{os.getcwd()}/src/Data/candidate_data.db')
+candidate_db.connect()
+
 
 @app.get("/", include_in_schema=False)
 def read_root():
@@ -55,74 +65,87 @@ def read_root():
 @app.get("/contact")
 async def get_candidate_contact_info(candidate_id: str = "CJA") -> CandidateContact:
     """Get the contact details for the candidate."""
-    candidate_cv = DetaDB().candidate_db.get(key=candidate_id)
-    candidate_contact_info = CandidateContact(**candidate_cv)
-    return candidate_contact_info.model_dump(mode="json")
+    candidate_contact_data = candidate_db.simple_query(table='candidates', column='CandidateContact', key=candidate_id)
+    candidate_contact_model = CandidateContact(**candidate_contact_data)
+    return candidate_contact_model.model_dump(mode="json")
 
 
 @app.get("/experience")
 async def get_candidate_experience(candidate_id: str = "CJA") -> CandidateExperiences:
     """Get details regarding the professional experience of the candidate."""
-    candidate_cv = DetaDB().candidate_db.get(key=candidate_id)
-    candidate_experience = CandidateExperiences(**candidate_cv)
-    return candidate_experience.model_dump(mode="json")
+    candidate_experiences_data = candidate_db.simple_query(table='candidates', column='CandidateExperiences', key=candidate_id)
+    candidate_experiences_model = CandidateExperiences(**candidate_experiences_data)
+    return candidate_experiences_model.model_dump(mode="json")
 
 
 @app.get("/education")
 async def get_candidate_education(candidate_id: str = "CJA") -> CandidateEducation:
     """Get the education details for the candidate."""
-    candidate_cv = DetaDB().candidate_db.get(key=candidate_id)
-    candidate_education = CandidateEducation(**candidate_cv)
-    return candidate_education.model_dump(mode="json")
+    candidate_education_data = candidate_db.simple_query(table='candidates', column='CandidateEducation', key=candidate_id)
+    candidate_education_model = CandidateEducation(**candidate_education_data)
+    return candidate_education_model.model_dump(mode="json")
 
 
 @app.get("/skills")
 async def get_candidate_skills(candidate_id: str = "CJA") -> CandidateSkillSet:
     """Get details regarding the skillset of the candidate."""
-    candidate_cv = DetaDB().candidate_db.get(key=candidate_id)
-    candidate_skills = CandidateSkillSet(**candidate_cv)
-    return candidate_skills.model_dump(mode="json")
+    candidate_skills_data = candidate_db.simple_query(table='candidates', column='CandidateSkillSet', key=candidate_id)
+    candidate_skills_model = CandidateSkillSet(**candidate_skills_data)
+    return candidate_skills_model.model_dump(mode="json")
 
 
 @app.get("/interests")
 async def get_candidate_interests(candidate_id: str = "CJA") -> CandidateInterests:
     """Get the interests for the candidate."""
-    candidate_cv = DetaDB().candidate_db.get(key=candidate_id)
-    candidate_interests = CandidateInterests(**candidate_cv)
-    return candidate_interests.model_dump(mode="json")
+    candidate_interests_data = candidate_db.simple_query(table='candidates', column='CandidateInterests', key=candidate_id)
+    candidate_interests_model = CandidateInterests(**candidate_interests_data)
+    return candidate_interests_model.model_dump(mode="json")
 
 
 @app.get("/full")
-async def get_candidate_curriculum_vitae(candidate_id: str = "CJA") -> CurriculumVitae:
+async def get_candidate_curriculum_vitae(candidate_id: str = "CJA") -> dict[str, Any]:
     """Get the full Curriculumn Vitae for the candidate."""
-    candidate_cv = DetaDB().candidate_db.get(key=candidate_id)
-    candidate_cv = CurriculumVitae(**candidate_cv)
-    return candidate_cv.model_dump(mode="json")
 
+    contact = await get_candidate_contact_info(candidate_id=candidate_id)
+    professional_experiences = await get_candidate_experience(candidate_id=candidate_id)
+    education_experiences = await get_candidate_education(candidate_id=candidate_id)
+    skills = await get_candidate_skills(candidate_id=candidate_id)
+    interests = await get_candidate_interests(candidate_id=candidate_id)
 
-@app.post("/message")
-async def send_a_message_to_candidate_via_telegram(mes: Message) -> dict:
-    """Send a message directly to the candidate."""
-    message_payload = dict(
-        full_name=mes.full_name,
-        email=mes.email.email,
-        mobile=mes.mobile,
-        company=mes.company,
-        message=mes.message,
+    candidate_cv_data = dict(
+        contact=Candidate(**contact['contact']),
+        professional_experiences=[Experience(**exp) for exp in professional_experiences['professional_experience']],
+        education_experiences=[Education(**edu) for edu in education_experiences['education_experience']],
+        skills=SkillSet(**skills),
+        interests=[Interest(**interest) for interest in interests['interests']],
     )
-    message_payload = {
-        "timestamp": dt.datetime.now().strftime("%Y%m%d%H%M%S%Z%f"),
-        **message_payload,
-    }
+    candidate_cv_model = CurriculumVitae(**candidate_cv_data)
+    return candidate_cv_model.model_dump(mode="json")
 
-    db_response = DetaDB().message_db.put(message_payload)
 
-    telegram_response = Telegram(
-        auth_key=DetaDB().admin_db.get(key="TELEGRAM_BOT_KEY").get("value"),
-        group_id=DetaDB().admin_db.get(key="TELEGRAM_BOT_GROUP_ID").get("value"),
-    ).send_message(payload=message_payload)
-    if telegram_response.status_code != 200:
-        logger.critical(telegram_response)
-        raise HTTPException(status_code=404, detail="The Message could not be sent!")
-
-    return {"response": "Message Sent."}
+# @app.post("/message")
+# async def send_a_message_to_candidate_via_telegram(mes: Message) -> dict:
+#     """Send a message directly to the candidate."""
+#     message_payload = dict(
+#         full_name=mes.full_name,
+#         email=mes.email.email,
+#         mobile=mes.mobile,
+#         company=mes.company,
+#         message=mes.message,
+#     )
+#     message_payload = {
+#         "timestamp": dt.datetime.now().strftime("%Y%m%d%H%M%S%Z%f"),
+#         **message_payload,
+#     }
+#
+#     db_response = DetaDB().message_db.put(message_payload)
+#
+#     telegram_response = Telegram(
+#         auth_key=DetaDB().admin_db.get(key="TELEGRAM_BOT_KEY").get("value"),
+#         group_id=DetaDB().admin_db.get(key="TELEGRAM_BOT_GROUP_ID").get("value"),
+#     ).send_message(payload=message_payload)
+#     if telegram_response.status_code != 200:
+#         logger.critical(telegram_response)
+#         raise HTTPException(status_code=404, detail="The Message could not be sent!")
+#
+#     return {"response": "Message Sent."}
