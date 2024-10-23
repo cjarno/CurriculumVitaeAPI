@@ -1,6 +1,6 @@
 # CurriculumVitaeAPI
 
-#### API URL: `curriculumnvitae-1-c2718671.deta.app`
+#### API URL: `cv-api.christopherarnold.au`
 
 ### Description
 
@@ -24,7 +24,7 @@ and allows users to quickly use the available endpoints.
 
 
 ## Version
-![Version1](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square)
+![Version1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square)
 
 
 ## Author
