@@ -1,6 +1,6 @@
 # CurriculumVitaeAPI
 
-#### API URL: `curriculumnvitae-1-c2718671.deta.app`
+#### API URL: `cv-api.christopherarnold.au`
 
 ### Description
 
