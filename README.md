@@ -11,7 +11,7 @@ and Pydantic for the data modeling and validation.
 Information can be retrieved by several `GET` methods and a
 `POST` method is provided to contact me directly via Telegram.
 
-A [swagger UI is also provided for documentation](https://curriculumnvitae-1-c2718671.deta.app/docs) 
+A [swagger UI is also provided for documentation](https://cv-api.christopherarnold.au/docs) 
 and allows users to quickly use the available endpoints.
 
 ## Built With
