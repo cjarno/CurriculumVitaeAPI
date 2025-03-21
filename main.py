@@ -145,5 +145,4 @@ async def send_a_message_to_candidate_via_telegram(mes: Message) -> dict:
         logger.success('Telegram Message Delivered!')
     else:
         raise HTTPException(status_code=telegram_response.status_code, detail=telegram_response.text)
-    return {"response": "Message Sent."}
-
+    return {"response": "Message successfully delivered via Telegram. Thank you and have a nice day!"}
