@@ -2,6 +2,8 @@ import os
 import datetime
 from fastapi import FastAPI, HTTPException
 from fastapi.openapi.utils import get_openapi
+from fastapi.middleware.cors import CORSMiddleware
+
 from loguru import logger
 from pydantic_settings import BaseSettings
 from typing import Any
@@ -31,6 +33,14 @@ class Settings(BaseSettings):
 
 settings = Settings()
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def custom_openapi():
