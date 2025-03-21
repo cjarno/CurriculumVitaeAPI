@@ -3,16 +3,6 @@ from typing import Optional, Union, Dict, List
 import datetime as dt
 
 
-class Message(BaseModel):
-    """Message entity for contacts to the candidate."""
-
-    full_name: str
-    email: NameEmail
-    mobile: str
-    company: str
-    message: str
-
-
 class Skill(BaseModel):
     """Simple model for a skill."""
 
