@@ -2,6 +2,7 @@ import os
 import datetime
 from fastapi import FastAPI, HTTPException
 from fastapi.openapi.utils import get_openapi
+from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 from pydantic_settings import BaseSettings
 from typing import Any
@@ -23,14 +24,20 @@ from src.Models import (
 )
 from src.Telegram import Telegram
 
-
 class Settings(BaseSettings):
     telegram_bot_auth_token: str
     telegram_bot_group_id: str
 
-
 settings = Settings()
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def custom_openapi():
