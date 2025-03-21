@@ -8,7 +8,6 @@ from .base_models import (
     Grade,
     Experience,
     Interest,
-    Message,
 )
 
 from .defaults import (

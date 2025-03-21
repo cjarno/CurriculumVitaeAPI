@@ -1,7 +1,6 @@
 fastapi
 uvicorn[standard]
 loguru
-deta
 pydantic
 pydantic[email]
 requests
