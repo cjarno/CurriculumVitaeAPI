@@ -1,6 +1,9 @@
 import os
-from fastapi import FastAPI
+import datetime
+from fastapi import FastAPI, HTTPException
 from fastapi.openapi.utils import get_openapi
+from loguru import logger
+from pydantic_settings import BaseSettings
 from typing import Any
 
 from src.Data import CandidateDB
@@ -15,9 +18,18 @@ from src.Models import (
     Experience,
     Interest,
     Education,
-    SkillSet
+    SkillSet,
+    Message
 )
+from src.Telegram import Telegram
 
+
+class Settings(BaseSettings):
+    telegram_bot_auth_token: str
+    telegram_bot_group_id: str
+
+
+settings = Settings()
 app = FastAPI()
 
 
@@ -108,3 +120,29 @@ async def get_candidate_curriculum_vitae(candidate_id: str = "CJA") -> dict[str,
     )
     candidate_cv_model = CurriculumVitae(**candidate_cv_data)
     return candidate_cv_model.model_dump(mode="json")
+
+
+@app.post("/message")
+async def send_a_message_to_candidate_via_telegram(mes: Message) -> dict:
+    """Send a message directly to the candidate."""
+    message_payload = dict(
+        full_name=mes.full_name,
+        email=mes.email.email,
+        mobile=mes.mobile,
+        company=mes.company,
+        message=mes.message,
+    )
+    message_payload = {
+        "timestamp": datetime.datetime.now().strftime("%Y%m%d%H%M%S%Z%f"),
+        **message_payload,
+    }
+
+    telegram_response = Telegram(
+        auth_token=settings.telegram_bot_auth_token,
+        group_id=settings.telegram_bot_group_id,
+    ).send_message(payload=message_payload)
+    if telegram_response.status_code == 200:
+        logger.success('Telegram Message Delivered!')
+    else:
+        raise HTTPException(status_code=telegram_response.status_code, detail=telegram_response.text)
+    return {"response": "Message successfully delivered via Telegram. Thank you and have a nice day!"}

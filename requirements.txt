@@ -2,5 +2,6 @@ fastapi
 uvicorn[standard]
 loguru
 pydantic
+pydantic_settings
 pydantic[email]
 requests
