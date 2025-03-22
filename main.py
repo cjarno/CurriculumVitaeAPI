@@ -24,11 +24,14 @@ from src.Models import (
 )
 from src.Telegram import Telegram
 
+
 class Settings(BaseSettings):
     telegram_bot_auth_token: str
     telegram_bot_group_id: str
 
+
 settings = Settings()
+
 app = FastAPI()
 
 app.add_middleware(
@@ -46,7 +49,8 @@ def custom_openapi():
     openapi_schema = get_openapi(
         title="Christopher Arnold's CV",
         version="1.1.2",
-        summary="An API that allows you to access Christopher Arnold's Curriculum Vitae details and provides a contact endpoint.",
+        summary="An API that allows you to access Christopher Arnold's "
+                "Curriculum Vitae details and provides a contact method.",
         description=None,
         routes=app.routes,
     )
@@ -65,7 +69,7 @@ candidate_db.connect()
 
 @app.get("/", include_in_schema=False)
 def read_root():
-    return {"Welcome": "This is the API for Christopher Arnold's curriculumn vitae."}
+    return {"Welcome": "This is the API for Christopher Arnold's curriculum vitae."}
 
 
 @app.get("/contact")
@@ -139,10 +143,7 @@ async def send_a_message_to_candidate_via_telegram(mes: Message) -> dict:
         company=mes.company,
         message=mes.message,
     )
-    message_payload = {
-        "timestamp": datetime.datetime.now().strftime("%Y%m%d%H%M%S%Z%f"),
-        **message_payload,
-    }
+    message_payload.update({"timestamp": datetime.datetime.now().strftime("%Y%m%d%H%M%S%Z%f")})
 
     telegram_response = Telegram(
         auth_token=settings.telegram_bot_auth_token,

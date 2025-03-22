@@ -3,11 +3,6 @@ import json
 import sqlite3
 
 
-class SQLDB:
-    def __init__(self):
-        self.candidate_db_path = 'candidate_data.db'
-
-
 class CandidateDB:
     def __init__(self, db_path: str):
         """
@@ -22,7 +17,7 @@ class CandidateDB:
         """
         Connect to the SQLite database.
         """
-        self.conn = sqlite3.connect(self.db_path)
+        self.conn = sqlite3.connect(database=self.db_path, check_same_thread=False)
 
     def close(self) -> None:
         """
