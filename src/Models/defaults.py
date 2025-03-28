@@ -19,7 +19,7 @@ class CandidateContact(BaseModel):
     contact: Candidate = Candidate(
         first_name="Christopher",
         last_name="Arnold",
-        mobile=dict(AU="+61 403 934 257", DE="+49 1573 8186 550"),
+        mobile=dict(AU="+61 08 6555 7040", DE="+49 1573 8186 550"),
         email="cjarnold93@gmail.com",
         website="https://christopherarnold.au/",
         linkedin="https://www.linkedin.com/in/cjarno/",
